@@ -8,6 +8,7 @@ import {
 import MascotasPage from "./pages/MascotasPage";
 import MascotasForm from "./components/mascotas/MascotasForm";
 import MascotasDetail from "./components/mascotas/MascotasDetail";
+import MascotasEdit from "./components/mascotas/MascotasEdit";
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
           <Route path="/mascotas" element={<MascotasPage />} />
           <Route path="/mascotas/:id" element={<MascotasDetail />} />
           <Route path="/mascotas/crear" element={<MascotasForm />} />
+          <Route path="/mascotas/:id/editar" element={<MascotasEdit />} />
 
           {/* Redirige a /mascotas para evitar página vacía */}
           <Route path="/" element={<Navigate to="/mascotas" replace />} />
