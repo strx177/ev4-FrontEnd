@@ -51,6 +51,14 @@ export default function MascotaCard({ mascota, onDelete }) {
           </p>
         </div>
 
+        <div className="mb-3">
+          <h6 className="fw-semibold mb-2">Descripción</h6>
+
+          <div className="bg-light border rounded p-3">
+            <p className="mb-0 text-muted">{mascota.descripcion}</p>
+          </div>
+        </div>
+
         <div className="d-flex gap-2 mt-3">
           <Link
             to={`${mascota.id}`}
