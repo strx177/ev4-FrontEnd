@@ -45,8 +45,9 @@ export default function MascotaCard({ mascota, onDelete }) {
 
         <div className="text-center">
           <p className="text-muted mb-4">
-            Raza: {mascota.raza} • Sexo: {mascota.sexo} • Edad: {mascota.edad}{" "}
-            años
+            <strong>Tipo de animal:</strong> {mascota.tipo_animal} •{" "}
+            <strong>Raza:</strong> {mascota.raza} • <strong>Sexo:</strong>{" "}
+            {mascota.sexo} • <strong>Edad:</strong> {mascota.edad} años
           </p>
         </div>
 
