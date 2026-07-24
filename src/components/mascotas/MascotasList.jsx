@@ -7,7 +7,6 @@ function MascotasList({ lista, onAdd }) {
     <>
       <h2>Lista mascotas</h2>
 
-      <MascotasForm onAdd={onAdd} />
       <div className="container-fluid px-4">
         <div className="row g-3">
           {lista.map((mascota) => (

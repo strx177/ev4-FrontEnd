@@ -5,10 +5,10 @@ import {
   NavLink,
   Navigate,
 } from "react-router-dom";
-import MascotasPage from "./pages/MascotasPage";
-import MascotasForm from "./components/mascotas/MascotasForm";
 import MascotasDetail from "./components/mascotas/MascotasDetail";
-import MascotasEdit from "./components/mascotas/MascotasEdit";
+import MascotasPage from "./pages/MascotasPage";
+import MascotasCreatePage from "./pages/MascotasCreatePage";
+import MascotasEditPage from "./pages/MascotasEditPage";
 
 function App() {
   return (
@@ -53,8 +53,8 @@ function App() {
         <Routes>
           <Route path="/mascotas" element={<MascotasPage />} />
           <Route path="/mascotas/:id" element={<MascotasDetail />} />
-          <Route path="/mascotas/crear" element={<MascotasForm />} />
-          <Route path="/mascotas/:id/editar" element={<MascotasEdit />} />
+          <Route path="/mascotas/crear" element={<MascotasCreatePage />} />
+          <Route path="/mascotas/:id/editar" element={<MascotasEditPage />} />
 
           {/* Redirige a /mascotas para evitar página vacía */}
           <Route path="/" element={<Navigate to="/mascotas" replace />} />
