@@ -27,6 +27,7 @@ export default function MascotaCard({ mascota, onDelete }) {
 
   return (
     <div className="card shadow-sm h-100">
+      <p className="text-muted">#{mascota.id}</p>
       <img
         src={mascota.imagen}
         className="card-img-top"

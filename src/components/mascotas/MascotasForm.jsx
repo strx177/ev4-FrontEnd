@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import mascotasApi from "../../api/api";
+import { useNavigate } from "react-router-dom";
 
 function MascotasForm({ mascota = null, onSubmit }) {
   const [estados, setEstados] = useState([]);
@@ -19,6 +20,8 @@ function MascotasForm({ mascota = null, onSubmit }) {
 
   const [imagen, setImagen] = useState(null);
   const [preview, setPreview] = useState(null);
+
+  const navigate = useNavigate();
 
   const fetchChoices = async () => {
     try {
@@ -72,6 +75,12 @@ function MascotasForm({ mascota = null, onSubmit }) {
     }
 
     onSubmit(formData);
+
+    mascota
+      ? alert("La mascota se editó correctamente.")
+      : alert("La mascota se registró correctamente.");
+
+    navigate("/");
   };
 
   return (
@@ -249,7 +258,14 @@ function MascotasForm({ mascota = null, onSubmit }) {
 
             <div className="d-flex justify-content-end gap-2 mt-4">
               <button type="submit" className="btn btn-success">
-                {mascota ? "Guardar mascota" : "Registrar mascota"}
+                {mascota ? "Editar mascota" : "Registrar mascota"}
+              </button>
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={() => navigate("/")}
+              >
+                Cancelar
               </button>
             </div>
           </form>
