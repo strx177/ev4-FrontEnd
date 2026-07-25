@@ -36,7 +36,7 @@ function App() {
               <ul className="navbar-nav ms-auto align-items-lg-center gap-lg-3">
                 <li className="nav-item">
                   <NavLink to={"/mascotas"} className={"nav-link fw-medium"}>
-                    <i className="bi bi-list-ul me-2"></i>Ver mascotas
+                    <i className="bi bi-search me-2"></i>Buscar mascotas
                   </NavLink>
                 </li>
 
