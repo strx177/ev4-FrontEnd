@@ -18,7 +18,6 @@ export default function MascotasCreatePage({ onSubmit }) {
   };
   return (
     <>
-      <h1>Crear mascota</h1>
       <MascotasForm onSubmit={crearMascota} />
     </>
   );

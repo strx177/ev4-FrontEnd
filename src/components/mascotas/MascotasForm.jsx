@@ -84,191 +84,254 @@ function MascotasForm({ mascota = null, onSubmit }) {
   };
 
   return (
-    <div className="container mt-4">
-      <div className="card shadow-sm">
-        <div className="card-body">
-          <h2 className="mb-4">
-            {mascota ? "Editar mascota" : "Registrar mascota"}
-          </h2>
+    <div className="container py-5">
+      <div className="row justify-content-center">
+        <div className="col-lg-9">
+          <div className="card shadow3-lg border-0 shadow">
+            <div className="card-header bg-primary text-white py-3">
+              <h2 className="mb-0 fw-bold">
+                {mascota ? "Editar mascota" : "Registrar mascota"}
+              </h2>
+            </div>
 
-          <form onSubmit={handleSubmit} encType="multipart/form-data">
-            {mascota?.imagen && (
-              <div className="mb-3 text-center">
-                <p className="mb-2">Imagen actual</p>
+            <div className="card-body p-4">
+              <form onSubmit={handleSubmit} encType="multipart/form-data">
+                <div className="mb-4">
+                  <h5 className="text-primary fw-bold">Imagen</h5>
 
-                <img
-                  src={mascota.imagen}
-                  alt={mascota.nombre}
-                  className="img-thumbnail"
-                  style={{ maxHeight: "220px", objectFit: "cover" }}
-                />
-              </div>
-            )}
+                  <div className="mb-3">
+                    <input
+                      id="imagenInput"
+                      type="file"
+                      className="d-none"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const archivo = e.target.files[0];
+                        setImagen(archivo);
+                        if (archivo) {
+                          setPreview(URL.createObjectURL(archivo));
+                        }
+                      }}
+                      required={!mascota}
+                    />
 
-            <div className="mb-3">
-              <label className="form-label">Imagen {!mascota && "*"}</label>
+                    <div className="card mt-2">
+                      <p></p>
+                      {preview || mascota?.imagen ? (
+                        <>
+                          <img
+                            src={preview || mascota.imagen}
+                            alt="Vista previa"
+                            className="img-fluid rounded mb-3"
+                            style={{ maxHeight: "250px", objectFit: "contain" }}
+                          />
 
-              <input
-                type="file"
-                className="form-control"
-                accept="image/*"
-                onChange={(e) => {
-                  const archivo = e.target.files[0];
-                  setImagen(archivo);
-                  if (archivo) {
-                    setPreview(URL.createObjectURL(archivo));
-                  }
-                }}
-                required={!mascota}
-              />
-              {preview && (
-                <div className="mt-3 text-center">
-                  <img
-                    src={preview}
-                    alt="Vista previa"
-                    className="img-thumbnail"
-                    style={{ maxHeight: "200px" }}
+                          <h5 className="text-primary fw-bold">
+                            Imagen seleccionada:
+                          </h5>
+
+                          <p className="text-muted mb-3">
+                            {imagen
+                              ? imagen.name
+                              : "Imagen actual de la mascota"}
+                          </p>
+
+                          <label
+                            htmlFor="imagenInput"
+                            className="btn btn-primary px-4 mx-4 mb-2"
+                            style={{ cursor: "pointer" }}
+                          >
+                            Cambiar imagen
+                          </label>
+                        </>
+                      ) : (
+                        <>
+                          <h5 className="text-primary fw-bold text-center">
+                            Agrega una fotografía
+                          </h5>
+
+                          <p className="text-muted mb-4 text-center">
+                            Selecciona una imagen para ayudar a identificar la
+                            mascota
+                          </p>
+
+                          <label
+                            htmlFor="imagenInput"
+                            className="btn btn-primary px-4 mx-4 mb-2"
+                            style={{ cursor: "pointer" }}
+                          >
+                            Seleccionar imagen
+                          </label>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <hr className="mb-4" />
+
+                <h5 className="text-primary fw-bold mb-3">
+                  Información general
+                </h5>
+
+                <div className="mb-3 ">
+                  <label className="form-label fw-semibold text-primary px-2 py-1 rounded">
+                    Nombre
+                  </label>
+
+                  <input
+                    type="text"
+                    className="form-control"
+                    maxLength={100}
+                    value={nombre}
+                    onChange={(e) => setNombre(e.target.value)}
+                    required
                   />
                 </div>
-              )}
+
+                <div className="mb-4">
+                  <label className="form-label fw-semibold text-primary px-2 py-1 rounded">
+                    Descripción
+                  </label>
+
+                  <textarea
+                    className="form-control"
+                    rows="4"
+                    value={descripcion}
+                    onChange={(e) => setDescripcion(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="row">
+                  <div className="col-md-6 mb-3">
+                    <label className="form-label fw-semibold text-primary px-2 py-1 rounded">
+                      Estado
+                    </label>
+
+                    <select
+                      className="form-select"
+                      value={selectedEstado}
+                      onChange={(e) => setEstado(e.target.value)}
+                    >
+                      {estados.map((estado) => (
+                        <option key={estado.value} value={estado.value}>
+                          {estado.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="col-md-6 mb-3">
+                    <label className="form-label fw-semibold text-primary px-2 py-1 rounded">
+                      Tipo de animal
+                    </label>
+
+                    <select
+                      className="form-select"
+                      value={selectedTipoMascota}
+                      onChange={(e) =>
+                        setTipoMascotaSeleccionada(e.target.value)
+                      }
+                    >
+                      {tipoMascota.map((tipo) => (
+                        <option key={tipo.value} value={tipo.value}>
+                          {tipo.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-md-4 mb-3">
+                    <label className="form-label fw-semibold text-primary px-2 py-1 rounded">
+                      Edad
+                    </label>
+
+                    <input
+                      type="number"
+                      min="0"
+                      className="form-control"
+                      value={edad}
+                      onChange={(e) => setEdad(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="col-md-8 mb-3">
+                    <label className="form-label fw-semibold text-primary px-2 py-1 rounded">
+                      Raza
+                    </label>
+
+                    <input
+                      type="text"
+                      maxLength={100}
+                      className="form-control"
+                      value={raza}
+                      onChange={(e) => setRaza(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-md-6 mb-3">
+                    <label className="form-label fw-semibold text-primary px-2 py-1 rounded">
+                      Sexo
+                    </label>
+
+                    <select
+                      className="form-select"
+                      value={selectedSexo}
+                      onChange={(e) => setSexoSeleccionado(e.target.value)}
+                    >
+                      <option value="">Seleccione...</option>
+
+                      {sexo.map((item) => (
+                        <option key={item.value} value={item.value}>
+                          {item.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="col-md-6 mb-4">
+                    <label className="form-label fw-semibold text-primary px-2 py-1 rounded">
+                      Tamaño
+                    </label>
+
+                    <select
+                      className="form-select"
+                      value={selectedTamano}
+                      onChange={(e) => setTamanoSeleccionado(e.target.value)}
+                    >
+                      <option value="">Seleccione...</option>
+
+                      {tamano.map((item) => (
+                        <option key={item.value} value={item.value}>
+                          {item.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <hr />
+
+                <div className="d-flex justify-content-end gap-3 mt-4">
+                  <button type="submit" className="btn btn-success px-4">
+                    {mascota ? "Editar mascota" : "Registrar mascota"}
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-danger px-4"
+                    onClick={() => navigate("/")}
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </form>
             </div>
-
-            <div className="mb-3">
-              <label className="form-label">Nombre</label>
-
-              <input
-                type="text"
-                className="form-control"
-                maxLength={100}
-                value={nombre}
-                onChange={(e) => setNombre(e.target.value)}
-                required
-              />
-            </div>
-
-            <div className="mb-3">
-              <label className="form-label">Descripción</label>
-
-              <textarea
-                className="form-control"
-                rows="4"
-                value={descripcion}
-                onChange={(e) => setDescripcion(e.target.value)}
-                required
-              />
-            </div>
-
-            <div className="row">
-              <div className="col-md-6 mb-3">
-                <label className="form-label">Estado</label>
-
-                <select
-                  className="form-select"
-                  value={selectedEstado}
-                  onChange={(e) => setEstado(e.target.value)}
-                >
-                  {estados.map((estado) => (
-                    <option key={estado.value} value={estado.value}>
-                      {estado.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="col-md-6 mb-3">
-                <label className="form-label">Tipo de animal</label>
-
-                <select
-                  className="form-select"
-                  value={selectedTipoMascota}
-                  onChange={(e) => setTipoMascotaSeleccionada(e.target.value)}
-                >
-                  {tipoMascota.map((tipo) => (
-                    <option key={tipo.value} value={tipo.value}>
-                      {tipo.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-md-4 mb-3">
-                <label className="form-label">Edad</label>
-
-                <input
-                  type="number"
-                  min="0"
-                  className="form-control"
-                  value={edad}
-                  onChange={(e) => setEdad(e.target.value)}
-                />
-              </div>
-
-              <div className="col-md-8 mb-3">
-                <label className="form-label">Raza</label>
-
-                <input
-                  type="text"
-                  maxLength={100}
-                  className="form-control"
-                  value={raza}
-                  onChange={(e) => setRaza(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-md-6 mb-3">
-                <label className="form-label">Sexo</label>
-
-                <select
-                  className="form-select"
-                  value={selectedSexo}
-                  onChange={(e) => setSexoSeleccionado(e.target.value)}
-                >
-                  <option value="">Seleccione...</option>
-
-                  {sexo.map((item) => (
-                    <option key={item.value} value={item.value}>
-                      {item.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="col-md-6 mb-3">
-                <label className="form-label">Tamaño</label>
-
-                <select
-                  className="form-select"
-                  value={selectedTamano}
-                  onChange={(e) => setTamanoSeleccionado(e.target.value)}
-                >
-                  <option value="">Seleccione...</option>
-
-                  {tamano.map((item) => (
-                    <option key={item.value} value={item.value}>
-                      {item.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            <div className="d-flex justify-content-end gap-2 mt-4">
-              <button type="submit" className="btn btn-success">
-                {mascota ? "Editar mascota" : "Registrar mascota"}
-              </button>
-              <button
-                type="button"
-                className="btn btn-danger"
-                onClick={() => navigate("/")}
-              >
-                Cancelar
-              </button>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
