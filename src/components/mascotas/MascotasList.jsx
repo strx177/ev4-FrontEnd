@@ -1,13 +1,8 @@
 import { Link } from "react-router-dom";
-import MascotasForm from "./MascotasForm";
 import MascotaCard from "../MascotaCard";
-import { useEffect, useState } from "react";
 import mascotasApi from "../../api/api";
 
-function MascotasList({ lista, onAdd }) {
-  const [mascotas, setMascotas] = useState([]);
-  const [cargando, setCargando] = useState(true);
-  const [error, setError] = useState("");
+function MascotasList({ lista, cargando, fetchMascotas }) {
   const eliminarMascota = async (id) => {
     if (
       !confirm(`Estás seguro de que deseas eliminar la mascota con ID: ${id}?`)
@@ -15,19 +10,11 @@ function MascotasList({ lista, onAdd }) {
       return;
     try {
       await mascotasApi.delete(`mascotas/${id}/`);
-      setMascotas((prev) => prev.filter((n) => n.id !== id));
+      if(fetchMascotas) fetchMascotas();
     } catch (error) {
-      setError("Error al eliminar la mascota");
+      alert("Error al eliminar la mascota");
     }
   };
-
-  useEffect(() => {
-    mascotasApi
-      .get("mascotas/")
-      .then(({ data }) => setMascotas(data))
-      .catch(() => setError("Error al cargar las mascotas"))
-      .finally(() => setCargando(false));
-  });
 
   if (cargando)
     return (
@@ -35,38 +22,36 @@ function MascotasList({ lista, onAdd }) {
         <div className="spinner-border text-primary" role="status">
           <span className="visually-hidden">Cargando...</span>
         </div>
-        <p className="mt-2 text-muted">Cargando mascotas...</p>
-      </div>
-    );
-
-  if (error)
-    return (
-      <div className="container mt-4">
-        <div className="alert alert-danger">{error}</div>
+        <p className="mt-3 text-muted fw-medium">Cargando mascotas...</p>
       </div>
     );
 
   return (
-    <div>
-      <h2>Lista mascotas</h2>
+    <div className="container mb-5">
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h3 className="fw-bold m-0 text-dark">Resultados ({lista?.length || 0})</h3>
+      </div>
 
-      {mascotas.length === 0 ? (
-        <div className="alert alert-info">
-          No hay mascotas... <Link to="/crear">Crea la primera</Link>
+      {!lista || lista.length === 0 ? (
+        <div className="text-center py-5 bg-white rounded-4 shadow-sm">
+          <i className="bi bi-search text-muted" style={{ fontSize: "3rem" }}></i>
+          <h4 className="mt-3 text-dark fw-semibold">No se encontraron mascotas</h4>
+          <p className="text-muted mb-4">Intenta ajustar tus filtros de búsqueda o registra una nueva mascota.</p>
+          <Link to="/mascotas/crear" className="btn btn-warning fw-bold rounded-pill px-4">
+            <i className="bi bi-plus-circle me-2"></i>Publicar mascota
+          </Link>
         </div>
       ) : (
-        <div className="container-fluid px-4">
-          <div className="row g-3">
-            {mascotas.map((mascota) => (
-              <div key={mascota.id} className="col-12 col-md-6 col-lg-4">
-                <MascotaCard
-                  key={mascota.id}
-                  mascota={mascota}
-                  onDelete={eliminarMascota}
-                />
-              </div>
-            ))}
-          </div>
+        <div className="row g-4">
+          {lista.map((mascota) => (
+            <div key={mascota.id} className="col-12 col-md-6 col-lg-4">
+              <MascotaCard
+                key={mascota.id}
+                mascota={mascota}
+                onDelete={eliminarMascota}
+              />
+            </div>
+          ))}
         </div>
       )}
     </div>

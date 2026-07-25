@@ -14,9 +14,12 @@ function App() {
   return (
     <>
       <Router>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-success shadow-sm">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm py-3">
           <div className="container-fluid">
-            <h1 className="navbar-brand fs-2 fw-bold m-0">Mascotas perdidas</h1>
+            <h1 className="navbar-brand fs-4 fw-bold m-0 d-flex align-items-center gap-2">
+              <i className="bi bi-geo-alt-fill text-warning"></i>
+              Mascotas perdidas
+            </h1>
 
             <button
               className="navbar-toggler"
@@ -32,17 +35,17 @@ function App() {
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav ms-auto align-items-lg-center gap-lg-3">
                 <li className="nav-item">
-                  <NavLink to={"/mascotas"} className={"nav-link fs-5"}>
-                    Ver mascotas
+                  <NavLink to={"/mascotas"} className={"nav-link fw-medium"}>
+                    <i className="bi bi-list-ul me-2"></i>Ver mascotas
                   </NavLink>
                 </li>
 
-                <li className="nav-item">
+                <li className="nav-item ms-lg-2">
                   <NavLink
                     to={"/mascotas/crear"}
-                    className={"btn btn-warning fw-semibold"}
+                    className={"btn btn-warning fw-bold rounded-pill px-4"}
                   >
-                    Registrar mascota
+                    <i className="bi bi-plus-circle me-2"></i>Publicar mascota
                   </NavLink>
                 </li>
               </ul>
