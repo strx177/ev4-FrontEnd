@@ -35,7 +35,7 @@ export default function MascotaCard({ mascota, onDelete }) {
         style={{ height: "250px", objectFit: "scale-down" }}
       />
 
-      <div className="card-body">
+      <div className="card-body d-flex flex-column">
         <div className="d-flex justify-content-between align-items-center mb-2">
           <h2 className="card-title mb-0">{mascota.nombre}</h2>
 
@@ -60,7 +60,7 @@ export default function MascotaCard({ mascota, onDelete }) {
           </div>
         </div>
 
-        <div className="d-flex gap-2 mt-3">
+        <div className="d-flex gap-2 mt-auto">
           <Link
             to={`${mascota.id}`}
             className="btn btn-outline-primary btn-sm flex-fill"
