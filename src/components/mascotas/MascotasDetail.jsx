@@ -169,24 +169,30 @@ function MascotasDetail() {
                 <h1 className="fw-bold text-dark mb-4">{mascota?.nombre}</h1>
 
                 <div className="row g-3 mb-4 bg-light rounded-4 p-3">
-                  <div className="col-6 col-md-3 text-center border-end">
+                  <div className="col-6 col-md text-center border-end">
                     <p className="text-muted small mb-1">Especie</p>
                     <p className="fw-bold mb-0 text-dark">
                       {mascota?.tipo_animal}
                     </p>
                   </div>
-                  <div className="col-6 col-md-3 text-center border-end-md">
+                  <div className="col-6 col-md text-center border-end">
                     <p className="text-muted small mb-1">Raza</p>
                     <p className="fw-bold mb-0 text-dark">{mascota?.raza}</p>
                   </div>
-                  <div className="col-6 col-md-3 text-center border-end">
+                  <div className="col-6 col-md text-center border-end">
                     <p className="text-muted small mb-1">Sexo</p>
                     <p className="fw-bold mb-0 text-dark">{mascota?.sexo}</p>
                   </div>
-                  <div className="col-6 col-md-3 text-center">
+                  <div className="col-6 col-md text-center border-end">
                     <p className="text-muted small mb-1">Edad</p>
                     <p className="fw-bold mb-0 text-dark">
                       {mascota?.edad} años
+                    </p>
+                  </div>
+                  <div className="col-12 col-md text-center">
+                    <p className="text-muted small mb-1">Tamaño</p>
+                    <p className="fw-bold mb-0 text-dark">
+                      {mascota?.tamano}
                     </p>
                   </div>
                 </div>

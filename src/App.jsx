@@ -14,7 +14,7 @@ function App() {
   return (
     <>
       <Router>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm py-3">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm py-3 sticky-top z-3">
           <div className="container-fluid">
             <h1 className="navbar-brand fs-4 fw-bold m-0 d-flex align-items-center gap-2">
               <i className="bi bi-geo-alt-fill text-warning"></i>
