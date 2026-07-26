@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 function MascotasDetail() {
   const { id } = useParams();
+  const [error, setError] = useState("");
   const [fetchError, setFetchError] = useState(false);
   const [mascota, setMascota] = useState(null);
   const [comentarios, setComentarios] = useState([]);
@@ -36,8 +37,10 @@ function MascotasDetail() {
 
   const handleSubmitComentario = async (e) => {
     e.preventDefault();
-    if (!nuevoAutor.trim() || !nuevoContenido.trim()) return;
-
+    if (!nuevoAutor.trim() || !nuevoContenido.trim()) {
+      setError("Ningún campo puede estar vacío.");
+      return;
+    }
     setSubmitting(true);
     try {
       const response = await mascotasApi.post("/comentarios/", {
@@ -191,9 +194,7 @@ function MascotasDetail() {
                   </div>
                   <div className="col-12 col-md text-center">
                     <p className="text-muted small mb-1">Tamaño</p>
-                    <p className="fw-bold mb-0 text-dark">
-                      {mascota?.tamano}
-                    </p>
+                    <p className="fw-bold mb-0 text-dark">{mascota?.tamano}</p>
                   </div>
                 </div>
 
@@ -227,14 +228,19 @@ function MascotasDetail() {
                     {comentarios
                       .filter((c) => c.mascota === Number(id))
                       .map((comentario) => (
-                        <div key={comentario.id} className="bg-light p-3 rounded-4">
+                        <div
+                          key={comentario.id}
+                          className="bg-light p-3 rounded-4"
+                        >
                           <div className="d-flex justify-content-between align-items-center mb-2">
                             <h6 className="fw-bold m-0 text-dark d-flex align-items-center gap-2">
                               <i className="bi bi-person-circle text-info"></i>
                               {comentario.autor}
                             </h6>
                             <small className="text-muted">
-                              {new Date(comentario.fecha_creacion).toLocaleDateString()}
+                              {new Date(
+                                comentario.fecha_creacion,
+                              ).toLocaleDateString()}
                             </small>
                           </div>
                           <p className="text-muted m-0 ms-4">
@@ -255,6 +261,7 @@ function MascotasDetail() {
 
               <div className="border-top pt-4">
                 <h5 className="fw-bold mb-3">Agregar un comentario</h5>
+                {error && <div className="alert alert-danger">{error}</div>}
                 <form onSubmit={handleSubmitComentario}>
                   <div className="mb-3">
                     <label
@@ -270,7 +277,6 @@ function MascotasDetail() {
                       placeholder="Tu nombre"
                       value={nuevoAutor}
                       onChange={(e) => setNuevoAutor(e.target.value)}
-                      required
                     />
                   </div>
                   <div className="mb-3">
@@ -287,7 +293,6 @@ function MascotasDetail() {
                       placeholder="Escribe tu mensaje aquí..."
                       value={nuevoContenido}
                       onChange={(e) => setNuevoContenido(e.target.value)}
-                      required
                     ></textarea>
                   </div>
                   <button
