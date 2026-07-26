@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import MascotaCard from "../MascotaCard";
 import mascotasApi from "../../api/api";
 
-function MascotasList({ lista, cargando, fetchMascotas }) {
+function MascotasList({ lista, cargando, fetchMascotas, error }) {
   const eliminarMascota = async (id) => {
     if (
       !confirm(`Estás seguro de que deseas eliminar la mascota con ID: ${id}?`)
@@ -25,6 +25,17 @@ function MascotasList({ lista, cargando, fetchMascotas }) {
         <p className="mt-3 text-muted fw-medium">Cargando mascotas...</p>
       </div>
     );
+
+  if (error) {
+    return (
+      <div className="container mb-5 mt-4 text-center">
+        <div className="alert alert-danger shadow-sm d-inline-block rounded-4 p-4 border-0" role="alert">
+          <i className="bi bi-exclamation-triangle-fill fs-1 d-block mb-3 text-danger"></i>
+          <h5 className="fw-bold text-dark m-0">{error}</h5>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container mb-5">

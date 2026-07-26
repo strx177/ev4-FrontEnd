@@ -6,6 +6,7 @@ import { Outlet } from "react-router-dom";
 function MascotasPage() {
   const [mascotasList, setMascotasList] = useState([]);
   const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState(null);
 
   // Filtros
   const [searchTerm, setSearchTerm] = useState("");
@@ -14,11 +15,13 @@ function MascotasPage() {
 
   const fetchMascotas = async () => {
     setCargando(true);
+    setError(null);
     try {
       const response = await mascotasApi.get("mascotas/");
       setMascotasList(response.data);
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.log(err);
+      setError("Hubo un error de conexion a la hora de cargar las mascotas");
     } finally {
       setCargando(false);
     }
@@ -122,7 +125,7 @@ function MascotasPage() {
         </div>
       </div>
 
-      <MascotasList lista={mascotasFiltradas} onSubmit={addMascotas} cargando={cargando} fetchMascotas={fetchMascotas} />
+      <MascotasList lista={mascotasFiltradas} onSubmit={addMascotas} cargando={cargando} fetchMascotas={fetchMascotas} error={error} />
 
       <Outlet />
     </>
