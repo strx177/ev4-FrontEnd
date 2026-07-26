@@ -9,6 +9,7 @@ import MascotasDetail from "./components/mascotas/MascotasDetail";
 import MascotasPage from "./pages/MascotasPage";
 import MascotasCreatePage from "./pages/MascotasCreatePage";
 import MascotasEditPage from "./pages/MascotasEditPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   return (
@@ -61,6 +62,9 @@ function App() {
 
           {/* Redirige a /mascotas para evitar página vacía */}
           <Route path="/" element={<Navigate to="/mascotas" replace />} />
+          
+          {/* Ruta 404 para cualquier otra URL no coincidente */}
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router>
     </>
