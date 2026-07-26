@@ -133,12 +133,21 @@ function MascotasForm({ mascota = null, onSubmit }) {
                       id="imagenInput"
                       type="file"
                       className="d-none"
-                      accept="image/*"
+                      accept=".jpg,.jpeg,.png,image/jpeg,image/png"
                       onChange={(e) => {
                         const archivo = e.target.files[0];
-                        setImagen(archivo);
                         if (archivo) {
+                          const allowedTypes = ['image/jpeg', 'image/png'];
+                          if (!allowedTypes.includes(archivo.type)) {
+                            setError("Solo se admiten fotos en formato JPG y PNG.");
+                            setImagen(null);
+                            setPreview(null);
+                            e.target.value = '';
+                            return;
+                          }
+                          setImagen(archivo);
                           setPreview(URL.createObjectURL(archivo));
+                          setError("");
                         }
                       }}
                     />
@@ -158,10 +167,13 @@ function MascotasForm({ mascota = null, onSubmit }) {
                             Imagen seleccionada:
                           </h5>
 
-                          <p className="text-muted mb-3">
+                          <p className="text-muted mb-1">
                             {imagen
                               ? imagen.name
                               : "Imagen actual de la mascota"}
+                          </p>
+                          <p className="text-info mb-3 fw-bold small">
+                            * Solo se admiten archivos JPG y PNG
                           </p>
 
                           <label
@@ -178,9 +190,12 @@ function MascotasForm({ mascota = null, onSubmit }) {
                             Agrega una fotografía
                           </h5>
 
-                          <p className="text-muted mb-4 text-center">
+                          <p className="text-muted mb-2 text-center">
                             Selecciona una imagen para ayudar a identificar la
                             mascota
+                          </p>
+                          <p className="text-info mb-4 text-center fw-bold small">
+                            * Solo se admiten archivos JPG y PNG
                           </p>
 
                           <label
