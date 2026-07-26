@@ -21,6 +21,8 @@ function MascotasForm({ mascota = null, onSubmit }) {
   const [imagen, setImagen] = useState(null);
   const [preview, setPreview] = useState(null);
 
+  const [error, setError] = useState("");
+
   const navigate = useNavigate();
 
   const fetchChoices = async () => {
@@ -58,9 +60,35 @@ function MascotasForm({ mascota = null, onSubmit }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     //console.log(nombre, descripcion, edad, raza, selectedEstado, selectedTipoMascota, selectedSexo, selectedTamano, imagen);
-    console.log(imagen);
+    //console.log(imagen);
 
     const formData = new FormData();
+
+    if (!mascota && !imagen) {
+      setError("Debes seleccionar una imagen.");
+      return;
+    }
+
+    if (!nombre.trim() || !descripcion.trim()) {
+      setError("Los campos obligatorios deben estar completos.");
+      return;
+    }
+
+    if (nombre.trim().length > 100) {
+      setError("El nombre no puede superar los 100 caracteres.");
+      return;
+    }
+
+    if (edad !== "" && (!Number.isInteger(Number(edad)) || Number(edad) < 0)) {
+      setError("La edad debe ser un número entero mayor o igual a 0.");
+      return;
+    }
+
+    if (raza.trim().length > 100) {
+      setError("La raza no puede superar los 100 caracteres.");
+      return;
+    }
+
     formData.append("nombre", nombre);
     formData.append("descripcion", descripcion);
     formData.append("edad", edad);
@@ -75,6 +103,7 @@ function MascotasForm({ mascota = null, onSubmit }) {
     }
 
     onSubmit(formData);
+    setError("");
 
     mascota
       ? alert("La mascota se editó correctamente.")
@@ -112,7 +141,6 @@ function MascotasForm({ mascota = null, onSubmit }) {
                           setPreview(URL.createObjectURL(archivo));
                         }
                       }}
-                      required={!mascota}
                     />
 
                     <div className="card mt-2">
@@ -173,6 +201,10 @@ function MascotasForm({ mascota = null, onSubmit }) {
                 <h5 className="text-primary fw-bold mb-3">
                   Información general
                 </h5>
+                <p className="text-secondary">
+                  Los campos marcados con * son obligatorios.
+                </p>
+                {error && <div className="alert alert-danger">{error}</div>}
 
                 <div className="mb-3 ">
                   <label className="form-label fw-semibold text-primary px-2 py-1 rounded">
@@ -182,10 +214,8 @@ function MascotasForm({ mascota = null, onSubmit }) {
                   <input
                     type="text"
                     className="form-control"
-                    maxLength={100}
                     value={nombre}
                     onChange={(e) => setNombre(e.target.value)}
-                    required
                   />
                 </div>
 
@@ -199,7 +229,6 @@ function MascotasForm({ mascota = null, onSubmit }) {
                     rows="4"
                     value={descripcion}
                     onChange={(e) => setDescripcion(e.target.value)}
-                    required
                   />
                 </div>
 
