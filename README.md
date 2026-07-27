@@ -1,5 +1,57 @@
 # README ev4 Front End
 
+# Instalación y ejecución del proyecto React
+
+## Requisitos previos
+
+Antes de comenzar, asegúrate de tener instalado:
+
+- **Node.js**
+- **npm** (incluido con Node.js)
+
+Puedes verificar la instalación ejecutando:
+
+```bash
+node -v
+npm -v
+```
+
+## Instalación
+
+1. Clona el repositorio:
+
+```bash
+git clone https://github.com/strx177/ev4-FrontEnd.git
+```
+
+2. Accede al directorio del proyecto:
+
+```bash
+cd <NOMBRE_DEL_PROYECTO>
+```
+
+3. Instala las dependencias:
+
+```bash
+npm install
+```
+
+## Ejecución
+
+Para iniciar el servidor de desarrollo, ejecuta:
+
+```bash
+npm run dev
+```
+
+Una vez iniciado, abre tu navegador y accede a:
+
+```
+http://localhost:5173
+```
+
+> **Nota:** El puerto puede variar dependiendo de la configuración del proyecto.
+
 ## Ejecución del linter
 
 En el commit `de0b4fc` se corrigieron todos los errores relevantes mostrados por el linter, los cuales de un total de 13 problemas (11 errores y 2 advertencias)
