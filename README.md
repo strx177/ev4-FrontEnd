@@ -5,7 +5,7 @@
 En el commit `de0b4fc` se corrigieron todos los errores relevantes mostrados por el linter, los cuales de un total de 13 problemas (11 errores y 2 advertencias)
 pasamos a 3 problemas (3 errores y 0 advertencias).
 
-<pre>
+```
 \ev4-FrontEnd\src\components\mascotas\MascotasForm.jsx
   43:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
 
@@ -55,11 +55,14 @@ Calling setState synchronously within an effect body causes cascading renders th
   44 |
   45 |   const mascotasFiltradas = mascotasList.filter((m) => {  react-hooks/set-state-in-effect
 ✖ 3 problems (3 errors, 0 warnings)
-</pre>
+```
 
 Se mantuvieron estos 3 problemas dado que:
+
 **Problema 1:** El linter está interpretando como error un patrón común en CRUDs.
+
 **Problema 2:** Se está usando useEffect para actualizar estados, también común. Podría adaptarse a form pero eso implica modificar la lógica de envío y gran parte del código.
+
 **Problema 3:** Uso esperado del useEffect.
 
 ## Uso de herramientas de Inteligencia Artificial
