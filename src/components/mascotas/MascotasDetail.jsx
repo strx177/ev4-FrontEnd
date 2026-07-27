@@ -14,27 +14,6 @@ function MascotasDetail() {
   const [submitting, setSubmitting] = useState(false);
   const [cargando, setCargando] = useState(true);
 
-  const fetchComentarios = async () => {
-    try {
-      const response = await mascotasApi.get("/comentarios/");
-      setComentarios(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const fetchMascotaDetail = async () => {
-    try {
-      const response = await mascotasApi.get(`mascotas/${id}/`);
-      setMascota(response.data);
-    } catch (error) {
-      console.log(error);
-      setFetchError(true);
-    } finally {
-      setCargando(false);
-    }
-  };
-
   const handleSubmitComentario = async (e) => {
     e.preventDefault();
     if (!nuevoAutor.trim() || !nuevoContenido.trim()) {
@@ -78,9 +57,30 @@ function MascotasDetail() {
   };
 
   useEffect(() => {
+    const fetchMascotaDetail = async () => {
+      try {
+        const response = await mascotasApi.get(`mascotas/${id}/`);
+        setMascota(response.data);
+      } catch (error) {
+        console.log(error);
+        setFetchError(true);
+      } finally {
+        setCargando(false);
+      }
+    };
+
+    const fetchComentarios = async () => {
+      try {
+        const response = await mascotasApi.get("/comentarios/");
+        setComentarios(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     fetchMascotaDetail();
     fetchComentarios();
-  }, []);
+  }, [id]);
 
   const getEstadoClase = (estado) => {
     switch (estado) {

@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
 import mascotasApi from "../api/api";
 import MascotasForm from "../components/mascotas/MascotasForm";
 
-export default function MascotasCreatePage({ onSubmit }) {
+export default function MascotasCreatePage() {
   const crearMascota = async (formData) => {
     try {
       const response = await mascotasApi.post("mascotas/", formData);

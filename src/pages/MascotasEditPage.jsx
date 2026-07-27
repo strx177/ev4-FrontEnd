@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import mascotasApi from "../api/api";
 import MascotasForm from "../components/mascotas/MascotasForm";
 
-export default function MascotasEditPage({ onAdd }) {
+export default function MascotasEditPage() {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -11,20 +11,20 @@ export default function MascotasEditPage({ onAdd }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchMascota();
-  }, []);
+    const fetchMascota = async () => {
+      try {
+        const response = await mascotasApi.get(`mascotas/${id}/`);
+        console.log(response.data);
+        setMascota(response.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const fetchMascota = async () => {
-    try {
-      const response = await mascotasApi.get(`mascotas/${id}/`);
-      console.log(response.data);
-      setMascota(response.data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    fetchMascota();
+  }, [id]);
 
   const editarMascota = async (formData) => {
     try {

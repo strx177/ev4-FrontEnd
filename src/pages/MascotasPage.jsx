@@ -42,13 +42,14 @@ function MascotasPage() {
     fetchMascotas();
   }, []);
 
-  const mascotasFiltradas = mascotasList.filter(m => {
-    const matchSearch = m.nombre?.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                        m.raza?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                        m.descripcion?.toLowerCase().includes(searchTerm.toLowerCase());
+  const mascotasFiltradas = mascotasList.filter((m) => {
+    const matchSearch =
+      m.nombre?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      m.raza?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      m.descripcion?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchEspecie = filtroEspecie ? m.tipo_animal === filtroEspecie : true;
     const matchEstado = filtroEstado ? m.estado === filtroEstado : true;
-    
+
     return matchSearch && matchEspecie && matchEstado;
   });
 
@@ -59,21 +60,27 @@ function MascotasPage() {
         <div className="container">
           <div className="row align-items-center">
             <div className="col-lg-6 mb-4 mb-lg-0">
-              <h1 className="display-4 fw-bold text-dark mb-3">Cada mascota merece estar en casa</h1>
+              <h1 className="display-4 fw-bold text-dark mb-3">
+                Cada mascota merece estar en casa
+              </h1>
               <p className="lead text-muted mb-4">
-                Únete a nuestra comunidad. Ayudamos a reunir familias con sus peludos amigos. 
-                Si encontraste o perdiste una mascota, estás en el lugar correcto.
+                Únete a nuestra comunidad. Ayudamos a reunir familias con sus
+                peludos amigos. Si encontraste o perdiste una mascota, estás en
+                el lugar correcto.
               </p>
               <div className="d-flex gap-3">
-                <a href="#buscar" className="btn btn-warning btn-lg px-4 rounded-pill fw-bold">
+                <a
+                  href="#buscar"
+                  className="btn btn-warning btn-lg px-4 rounded-pill fw-bold"
+                >
                   <i className="bi bi-search me-2"></i>Buscar ahora
                 </a>
               </div>
             </div>
             <div className="col-lg-6 text-center">
-              <img 
-                src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                alt="Perro feliz reencontrado" 
+              <img
+                src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                alt="Perro feliz reencontrado"
                 className="img-fluid rounded-4 shadow-sm"
                 style={{ maxHeight: "400px", objectFit: "cover" }}
               />
@@ -85,21 +92,24 @@ function MascotasPage() {
       {/* Filters Section */}
       <div className="container mb-5" id="buscar">
         <div className="card p-4 rounded-4">
-          <h4 className="fw-bold mb-3"><i className="bi bi-funnel me-2 text-primary"></i>Filtros de Búsqueda</h4>
+          <h4 className="fw-bold mb-3">
+            <i className="bi bi-funnel me-2 text-primary"></i>Filtros de
+            Búsqueda
+          </h4>
           <div className="row g-3">
             <div className="col-md-4">
-              <input 
-                type="text" 
-                className="form-control" 
-                placeholder="Buscar por nombre, raza o descripción..." 
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Buscar por nombre, raza o descripción..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
             <div className="col-md-4">
-              <select 
-                className="form-select" 
-                value={filtroEspecie} 
+              <select
+                className="form-select"
+                value={filtroEspecie}
                 onChange={(e) => setFiltroEspecie(e.target.value)}
               >
                 <option value="">Todas las especies</option>
@@ -109,9 +119,9 @@ function MascotasPage() {
               </select>
             </div>
             <div className="col-md-4">
-              <select 
-                className="form-select" 
-                value={filtroEstado} 
+              <select
+                className="form-select"
+                value={filtroEstado}
                 onChange={(e) => setFiltroEstado(e.target.value)}
               >
                 <option value="">Todos los estados</option>
@@ -125,7 +135,13 @@ function MascotasPage() {
         </div>
       </div>
 
-      <MascotasList lista={mascotasFiltradas} onSubmit={addMascotas} cargando={cargando} fetchMascotas={fetchMascotas} error={error} />
+      <MascotasList
+        lista={mascotasFiltradas}
+        onSubmit={addMascotas}
+        cargando={cargando}
+        fetchMascotas={fetchMascotas}
+        error={error}
+      />
 
       <Outlet />
     </>

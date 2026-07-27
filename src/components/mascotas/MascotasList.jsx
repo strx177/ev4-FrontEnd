@@ -13,6 +13,7 @@ function MascotasList({ lista, cargando, fetchMascotas, error }) {
       if (fetchMascotas) fetchMascotas();
     } catch (error) {
       alert("Error al eliminar la mascota");
+      console.log(error);
     }
   };
 
@@ -29,7 +30,10 @@ function MascotasList({ lista, cargando, fetchMascotas, error }) {
   if (error) {
     return (
       <div className="container mb-5 mt-4 text-center">
-        <div className="alert alert-danger shadow-sm d-inline-block rounded-4 p-4 border-0" role="alert">
+        <div
+          className="alert alert-danger shadow-sm d-inline-block rounded-4 p-4 border-0"
+          role="alert"
+        >
           <i className="bi bi-exclamation-triangle-fill fs-1 d-block mb-3 text-danger"></i>
           <h5 className="fw-bold text-dark m-0">{error}</h5>
         </div>
