@@ -126,7 +126,7 @@ function MascotasForm({ mascota = null, onSubmit }) {
             <div className="card-body p-4">
               <form onSubmit={handleSubmit} encType="multipart/form-data">
                 <div className="mb-4">
-                  <h5 className="text-primary fw-bold">Imagen</h5>
+                  <h5 className="text-primary fw-bold">Imagen *</h5>
 
                   <div className="mb-3">
                     <input
@@ -137,12 +137,14 @@ function MascotasForm({ mascota = null, onSubmit }) {
                       onChange={(e) => {
                         const archivo = e.target.files[0];
                         if (archivo) {
-                          const allowedTypes = ['image/jpeg', 'image/png'];
+                          const allowedTypes = ["image/jpeg", "image/png"];
                           if (!allowedTypes.includes(archivo.type)) {
-                            setError("Solo se admiten fotos en formato JPG y PNG.");
+                            setError(
+                              "Solo se admiten fotos en formato JPG y PNG.",
+                            );
                             setImagen(null);
                             setPreview(null);
-                            e.target.value = '';
+                            e.target.value = "";
                             return;
                           }
                           setImagen(archivo);
@@ -223,7 +225,7 @@ function MascotasForm({ mascota = null, onSubmit }) {
 
                 <div className="mb-3 ">
                   <label className="form-label fw-semibold text-primary px-2 py-1 rounded">
-                    Nombre
+                    Nombre *
                   </label>
 
                   <input
@@ -236,7 +238,7 @@ function MascotasForm({ mascota = null, onSubmit }) {
 
                 <div className="mb-4">
                   <label className="form-label fw-semibold text-primary px-2 py-1 rounded">
-                    Descripción
+                    Descripción *
                   </label>
 
                   <textarea
