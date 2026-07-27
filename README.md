@@ -226,3 +226,112 @@ src/pages/MascotasPage.jsx :
 Declaración
 
 Las herramientas de Inteligencia Artificial fueron utilizadas únicamente como apoyo durante el desarrollo del proyecto. La integración de los distintos componentes, la adaptación del código, las pruebas de funcionamiento y las decisiones de implementación fueron realizadas por el equipo de desarrollo.
+
+# Preguntas conceptuales
+
+## a. ¿Qué es destructuring y en qué situaciones lo utilizaron en el proyecto?
+
+Es una sintaxis de JavaScript que permite extraer valores de un objeto o un arreglo y guardarlos directamente en variables.
+
+En el proyecto lo usamos principalmente en:
+
+- **useState:** `const [error, setError] = useState("")`.
+- **Props:** `function MascotasList({ lista, cargando, fetchMascotas, error })`.
+- **useParams:** `const { id } = useParams()`.
+
+---
+
+## b. ¿Qué hace async/await y qué problema resuelve frente al uso de .then()?
+
+`async/await` permite trabajar con operaciones asíncronas, como las peticiones a la API, de una forma más clara y ordenada.
+La palabra `async` indica que una función es asíncrona, mientras que await hace que el código espere la respuesta de una promesa antes de continuar con la siguiente instrucción, sin bloquear la ejecución de la aplicación.
+
+En lugar de usar repetidamente `.then()`, el código se lee de arriba hacia abajo y los errores se pueden manejar fácilmente con `try/catch`.
+
+```
+useEffect(() => {
+    const fetchMascota = async () => {
+      try {
+        const response = await mascotasApi.get(`mascotas/${id}/`);
+        console.log(response.data);
+        setMascota(response.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+```
+
+```
+const editarMascota = async (formData) => {
+    try {
+      await mascotasApi.patch(`mascotas/${id}/`, formData);
+      navigate("/");
+    } catch (error) {
+      console.error(error.response?.data || error);
+    }
+  };
+```
+
+---
+
+## c. ¿Cómo funciona FormData y por qué es necesario para enviar la imagen de una mascota?
+
+FormData permite enviar datos de un formulario, incluyendo archivos.
+
+FormData utiliza el formato `multipart/form-data`, que permite enviar en una misma petición los campos de texto y el archivo de imagen.
+
+Es necesario al trabajar con imágenes porque una imagen se trata como un archivo binario, así que si se intentara enviar junto con los demás datos en un objeto JSON normal el archivo no se transmite de forma correcta.
+
+---
+
+## d. ¿Qué son las props en React?
+
+Las props son datos que un componente padre envía a un componente hijo.
+
+Sirven para que el componente hijo pueda mostrar o utilizar esa información sin modificarla. Por ejemplo, `MascotasList` recibe la lista de mascotas y otros datos mediante props.
+
+Componente padre:
+
+```
+<MascotasList
+  lista={mascotasFiltradas}
+  onSubmit={addMascotas}
+  cargando={cargando}
+  fetchMascotas={fetchMascotas}
+  error={error}
+/>
+```
+
+Componente hijo:
+
+```
+function MascotasList({ lista, cargando, fetchMascotas, error }) {
+  ...
+}
+```
+
+---
+
+## e. ¿Qué son los componentes en React?
+
+Los componentes son funciones reutilizables que representan partes de la interfaz de la aplicación.
+
+En el proyecto utilizamos componentes como `MascotasForm`, `MascotasList`, `MascotaCard` y `MascotasDetail` para mantener el código organizado.
+
+---
+
+## f. ¿Por qué no es una buena práctica mostrar al usuario final el mensaje de error tal como lo entrega la API?
+
+Porque los mensajes de la API suelen ser técnicos y pueden confundir al usuario o mostrar información interna del sistema. Mostrar detalles sobre errores en pantalla también expone la estructura y funcionamiento interno de la app y puede llevar a uso malintencionado.
+
+---
+
+## g. ¿Qué diferencia existe entre PATCH y PUT, y por qué se utiliza PATCH para actualizar una mascota?
+
+**PUT** reemplaza todo el recurso, mientras que **PATCH** solo actualiza los campos que cambiaron.
+
+En el proyecto usamos **PATCH** porque al editar una mascota no siempre se modifica la imagen. Si se utilizara **PUT** y no se enviara nuevamente el archivo de imagen, podría eliminarse o quedar vacía, ya que **PUT** espera recibir todos los datos del recurso.
+
+Con **PATCH** solo se envían los campos que cambiaron. Así, si el usuario actualiza únicamente el nombre o la descripción, la imagen no se envía y se conserva que ya estaba almacenada.
