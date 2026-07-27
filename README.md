@@ -1,5 +1,67 @@
 # README ev4 Front End
 
+## Ejecución del linter
+
+En el commit `de0b4fc` se corrigieron todos los errores relevantes mostrados por el linter, los cuales de un total de 13 problemas (11 errores y 2 advertencias)
+pasamos a 3 problemas (3 errores y 0 advertencias).
+
+<pre>
+\ev4-FrontEnd\src\components\mascotas\MascotasForm.jsx
+  43:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  41 |
+  42 |   useEffect(() => {
+> 43 |     fetchChoices();
+     |     ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  44 |   }, []);
+  45 |
+  46 |   useEffect(() => {                                                                                                         react-hooks/set-state-in-effect
+  49:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  47 |     if (!mascota) return;
+  48 |
+> 49 |     setNombre(mascota.nombre ?? "");
+     |     ^^^^^^^^^ Avoid calling setState() directly within an effect
+  50 |     setDescripcion(mascota.descripcion ?? "");
+  51 |     setEdad(mascota.edad ?? "");
+  52 |     setRaza(mascota.raza ?? "");  react-hooks/set-state-in-effect
+
+\frontend\ev4-FrontEnd\src\pages\MascotasPage.jsx
+  42:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  40 |
+  41 |   useEffect(() => {
+> 42 |     fetchMascotas();
+     |     ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  43 |   }, []);
+  44 |
+  45 |   const mascotasFiltradas = mascotasList.filter((m) => {  react-hooks/set-state-in-effect
+✖ 3 problems (3 errors, 0 warnings)
+</pre>
+
+Se mantuvieron estos 3 problemas dado que:
+**Problema 1:** El linter está interpretando como error un patrón común en CRUDs.
+**Problema 2:** Se está usando useEffect para actualizar estados, también común. Podría adaptarse a form pero eso implica modificar la lógica de envío y gran parte del código.
+**Problema 3:** Uso esperado del useEffect.
+
 ## Uso de herramientas de Inteligencia Artificial
 
 Durante el desarrollo de este proyecto se utilizaron las siguientes herramientas de Inteligencia Artificial como apoyo al realizar esta evaluación
